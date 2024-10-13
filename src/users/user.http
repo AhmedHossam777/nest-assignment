@@ -1,0 +1,33 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=WebStorm
+
+### Create User
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "dada@email.com",
+    "password": "123456"
+}
+
+### Get All Users
+GET http://localhost:3000/users
+Content-Type: application/json
+
+### Get User By Id
+GET http://localhost:3000/users/670c392aa8d3c986ee50f
+Content-Type: application/json
+
+### Update User
+PATCH http://localhost:3000/users/670c392aa8d3c986ee50feb0
+Content-Type: application/json
+
+{
+    "name": "Aldod"
+}
+
+### Delete User
+DELETE http://localhost:3000/users/1
+Content-Type: application/json
