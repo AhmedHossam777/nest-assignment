@@ -1,0 +1,32 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=WebStorm
+
+### Create Vendor
+POST http://localhost:3000/vendors
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "dada@email.com",
+    "password": "123456"
+}
+
+### Get All Vendors
+GET http://localhost:3000/vendors
+Content-Type: application/json
+
+### Get Vendor By Id
+GET http://localhost:3000/vendors/670d71c87a77cd3364a2c571
+
+### Update Vendor
+PATCH http://localhost:3000/vendors/670d71c87a77cd3364a2c571
+Content-Type: application/json
+
+{
+    "name": "dod"
+}
+
+### Delete Vendor
+DELETE http://localhost:3000/vendors/670d71c87a77cd3364a2c571
+Content-Type: application/json

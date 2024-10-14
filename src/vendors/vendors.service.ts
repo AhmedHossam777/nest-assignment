@@ -1,26 +1,54 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateVendorDto } from './dto/create-vendor.dto';
 import { UpdateVendorDto } from './dto/update-vendor.dto';
+import { Model } from 'mongoose';
+import { Vendor, VendorDocument } from './entities/vendor.entity';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class VendorsService {
-  create(createVendorDto: CreateVendorDto) {
-    return 'This action adds a new vendor';
-  }
+	constructor(
+		@InjectModel(Vendor.name) private VendorModel: Model<VendorDocument>,
+	) {}
 
-  findAll() {
-    return `This action returns all vendors`;
-  }
+	async create(createVendorDto: CreateVendorDto): Promise<Vendor> {
+		const vendor = await this.VendorModel.create(createVendorDto);
 
-  findOne(id: number) {
-    return `This action returns a #${id} vendor`;
-  }
+		return vendor;
+	}
 
-  update(id: number, updateVendorDto: UpdateVendorDto) {
-    return `This action updates a #${id} vendor`;
-  }
+	async findAll(): Promise<Vendor[]> {
+		const vendors = await this.VendorModel.find().exec();
 
-  remove(id: number) {
-    return `This action removes a #${id} vendor`;
-  }
+		return vendors;
+	}
+
+	async findOne(id: string): Promise<Vendor> {
+		const vendor = await this.VendorModel.findById(id).exec();
+		if (!vendor)
+			throw new NotFoundException(`vendor with id : ${id} not found`);
+
+		return vendor;
+	}
+
+	async update(id: string, updateVendorDto: UpdateVendorDto): Promise<Vendor> {
+		const newVendor = await this.VendorModel.findByIdAndUpdate(
+			id,
+			updateVendorDto,
+			{ new: true },
+		);
+
+		if (!newVendor)
+			throw new NotFoundException(`vendor with id : ${id} not found`);
+
+		return newVendor;
+	}
+
+	async remove(id: string): Promise<Vendor> {
+		const deletedVendor = await this.VendorModel.findByIdAndDelete(id).exec();
+		if (!deletedVendor)
+			throw new NotFoundException(`vendor with id : ${id} not found`);
+
+		return deletedVendor;
+	}
 }
