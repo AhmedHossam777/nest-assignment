@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 
 import * as bcrypt from 'bcrypt';
 
+//* In Future we can make 2 token authenticaion for user and vendor
 @Injectable()
 export class AuthService {
 	constructor(
