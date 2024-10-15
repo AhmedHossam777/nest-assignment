@@ -1,0 +1,40 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=WebStorm
+
+### Create a new category
+POST localhost:3000/category
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGgBna2-xgo
+
+{
+  "name": "Category 1"
+}
+
+### Get all categories
+GET localhost:3000/category
+
+### Get category by id
+GET localhost:3000/category/670e8aaffede717a01a2f34e
+
+### Update category
+PATCH localhost:3000/category/670e8aaffede717a01a2f34e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGgBna2-xgo
+
+{
+  "name": "Category 2"
+}
+
+### Delete category
+DELETE localhost:3000/category/670e8aaffede717a01a2f34e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGGgBna2-xgo
+
+### Get category by name
+GET localhost:3000/category/name/Category 1
+
+### Get all products of a category
+GET localhost:3000/category/670e8aaffede717a01a2f34e/products
+
+### Add product to a category
+POST localhost:3000/category/670e8aaffede717a01a2f34e/products/670e8aaffede717a01a2f34e

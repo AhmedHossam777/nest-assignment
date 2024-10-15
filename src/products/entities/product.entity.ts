@@ -1,6 +1,7 @@
 import { Document, Types } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Vendor } from '../../vendors/entities/vendor.entity';
+import { Category } from '../../category/entities/category.entity';
 
 @Schema({
 	timestamps: true,
@@ -13,13 +14,16 @@ import { Vendor } from '../../vendors/entities/vendor.entity';
 })
 export class Product {
 	@Prop({ required: true })
-	title: string;
+	name: string;
 
 	@Prop({ required: true })
 	price: number;
 
 	@Prop({ type: Types.ObjectId, ref: Vendor.name, required: true })
 	vendor: Types.ObjectId | Vendor;
+
+	// @Prop({ type: Types.ObjectId, ref: Category.name, required: true })
+	// category: Types.ObjectId | Category;
 }
 
 export type ProductDocument = Product & Document;
