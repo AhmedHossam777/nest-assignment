@@ -1,0 +1,36 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=WebStorm
+
+### Add a new product
+POST localhost:3000/products
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGgBna2-xgo
+
+{
+  "name": "Product 1",
+  "price": 100
+}
+
+### Get all products
+GET localhost:3000/products
+
+### Get product by id
+GET localhost:3000/products/670e8aaffede717a01a2f34e
+
+### Update product
+PATCH localhost:3000/products/670e8aaffede717a01a2f34e
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGgBna2-xgo
+
+{
+  "price": 200
+}
+
+### Delete product
+DELETE localhost:3000/products/670e8aaffede717a01a2f34e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGgBna2-xgo
+
+### Get all products
+GET localhost:3000/products/my-products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGgBna2-xgo
