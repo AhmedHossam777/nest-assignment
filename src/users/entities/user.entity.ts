@@ -1,4 +1,4 @@
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 import * as bcrypt from 'bcrypt';
 
@@ -25,6 +25,9 @@ export class User {
 
 	@Prop({ default: false })
 	isAdmin: boolean;
+
+	@Prop({ type: Types.ObjectId, ref: 'Cart' })
+	cart: Types.ObjectId;
 }
 
 export type UserDocument = User & Document;
