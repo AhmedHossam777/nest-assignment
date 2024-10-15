@@ -1,6 +1,7 @@
 import { Document } from 'mongoose';
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as bcrypt from 'bcrypt';
 
 @Schema({
 	timestamps: true,
@@ -20,10 +21,24 @@ export class Vendor {
 
 	@Prop({ required: true })
 	password: string;
+
+	async validatePassword(
+		candidatePassword: string,
+		password: string,
+	): Promise<boolean> {
+		return bcrypt.compare(candidatePassword, password);
+	}
 }
 
 export type VendorDocument = Vendor & Document;
 
 const VendorSchema = SchemaFactory.createForClass(Vendor);
+
+VendorSchema.pre<VendorDocument>('save', async function (next) {
+	if (this.isModified('password')) {
+		this.password = await bcrypt.hash(this.password, 10);
+	}
+	next();
+});
 
 export default VendorSchema;

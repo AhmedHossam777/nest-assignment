@@ -11,19 +11,19 @@ export class VendorsService {
 		@InjectModel(Vendor.name) private VendorModel: Model<VendorDocument>,
 	) {}
 
-	async create(createVendorDto: CreateVendorDto): Promise<Vendor> {
+	async create(createVendorDto: CreateVendorDto): Promise<VendorDocument> {
 		const vendor = await this.VendorModel.create(createVendorDto);
 
 		return vendor;
 	}
 
-	async findAll(): Promise<Vendor[]> {
+	async findAll(): Promise<VendorDocument[] | null> {
 		const vendors = await this.VendorModel.find().exec();
 
 		return vendors;
 	}
 
-	async findOne(id: string): Promise<Vendor> {
+	async findOne(id: string): Promise<VendorDocument | null> {
 		const vendor = await this.VendorModel.findById(id).exec();
 		if (!vendor)
 			throw new NotFoundException(`vendor with id : ${id} not found`);
@@ -31,7 +31,7 @@ export class VendorsService {
 		return vendor;
 	}
 
-	async findByEmail(email: string): Promise<Vendor> {
+	async findByEmail(email: string): Promise<VendorDocument | null> {
 		const vendor = await this.VendorModel.findOne({ email }).exec();
 		if (!vendor)
 			throw new NotFoundException(`vendor with email : ${email} not found`);
@@ -39,7 +39,10 @@ export class VendorsService {
 		return vendor;
 	}
 
-	async update(id: string, updateVendorDto: UpdateVendorDto): Promise<Vendor> {
+	async update(
+		id: string,
+		updateVendorDto: UpdateVendorDto,
+	): Promise<VendorDocument | null> {
 		const newVendor = await this.VendorModel.findByIdAndUpdate(
 			id,
 			updateVendorDto,
@@ -52,7 +55,7 @@ export class VendorsService {
 		return newVendor;
 	}
 
-	async remove(id: string): Promise<Vendor> {
+	async remove(id: string): Promise<VendorDocument | null> {
 		const deletedVendor = await this.VendorModel.findByIdAndDelete(id).exec();
 		if (!deletedVendor)
 			throw new NotFoundException(`vendor with id : ${id} not found`);

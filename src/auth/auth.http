@@ -1,0 +1,41 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=WebStorm
+
+### Register User
+POST http://localhost:3000/auth/user/register
+Content-Type: application/json
+
+{
+    "name": "dada",
+    "email": "dada2@email.com",
+    "password": "123456"
+}
+
+### Login User
+POST http://localhost:3000/auth/user/login
+Content-Type: application/json
+
+{
+    "email": "dada2@email.com",
+    "password": "123456"
+}
+
+### Register Vendor
+POST http://localhost:3000/auth/vendor/register
+Content-Type: application/json
+
+{
+    "name": "John Doe",
+    "email": "ahmed@email.com",
+    "password": "123456"
+}
+
+### Login Vendor
+POST http://localhost:3000/auth/vendor/login
+Content-Type: application/json
+
+{
+    "email": "ahmed@email.com",
+    "password": "123456"
+}

@@ -9,42 +9,51 @@ import { Model } from 'mongoose';
 export class UsersService {
 	constructor(@InjectModel(User.name) private UserModel: Model<UserDocument>) {}
 
-	async create(createUserDto: CreateUserDto): Promise<User> {
-		return await this.UserModel.create(createUserDto);
+	async create(createUserDto: CreateUserDto): Promise<UserDocument> {
+		const createdUser = new this.UserModel(createUserDto);
+		return createdUser.save();
 	}
 
-	async findAll(): Promise<User[]> {
+	async findAll(): Promise<UserDocument[] | null> {
 		const users = await this.UserModel.find().exec();
 
 		return users;
 	}
 
-	async findOne(id: string): Promise<User> {
-		const user = await this.UserModel.findById(id).exec();
+	async findOne(id: string): Promise<UserDocument | null> {
+		const user: UserDocument = await this.UserModel.findById(id).exec();
 		if (!user) throw new NotFoundException(`user with id : ${id} not found`);
 
 		return user;
 	}
 
-	async findByEmail(email: string): Promise<User> {
-		const user = await this.UserModel.findOne({ email }).exec();
+	async findByEmail(email: string): Promise<UserDocument | null> {
+		const user: UserDocument = await this.UserModel.findOne({ email }).exec();
 		if (!user)
 			throw new NotFoundException(`user with email : ${email} not found`);
 
 		return user;
 	}
 
-	async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-		const newUser = await this.UserModel.findByIdAndUpdate(id, updateUserDto, {
-			new: true,
-		}).exec();
+	async update(
+		id: string,
+		updateUserDto: UpdateUserDto,
+	): Promise<UserDocument | null> {
+		const newUser: UserDocument = await this.UserModel.findByIdAndUpdate(
+			id,
+			updateUserDto,
+			{
+				new: true,
+			},
+		).exec();
 		if (!newUser) throw new NotFoundException(`user with id : ${id} not found`);
 
 		return newUser;
 	}
 
-	async remove(id: string): Promise<User> {
-		const deletedUser = await this.UserModel.findByIdAndDelete(id).exec();
+	async remove(id: string): Promise<UserDocument | null> {
+		const deletedUser: UserDocument =
+			await this.UserModel.findByIdAndDelete(id).exec();
 		if (!deletedUser)
 			throw new NotFoundException(`user with id : ${id} not found`);
 
