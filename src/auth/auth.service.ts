@@ -28,6 +28,12 @@ export class AuthService {
 	}
 
 	async registerUser(createUserDto: CreateUserDto) {
+		const { email } = createUserDto;
+		const userExists = await this.usersService.findByEmail(email);
+		if (userExists) {
+			throw new BadRequestException('User already exists');
+		}
+
 		const user = await this.usersService.create(createUserDto);
 		console.log(user);
 
@@ -60,6 +66,12 @@ export class AuthService {
 	}
 
 	async registerVendor(createVendorDto: CreateVendorDto) {
+		const { email } = createVendorDto;
+		const vendorExists = await this.vendorsService.findByEmail(email);
+		if (vendorExists) {
+			throw new BadRequestException('User already exists');
+		}
+
 		const vendor = await this.vendorsService.create(createVendorDto);
 		const token = await this.generateTokens(vendor._id.toString(), 'vendor');
 
