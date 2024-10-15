@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+import { UsersService } from '../users/users.service';
+import { VendorsService } from '../vendors/vendors.service';
 
 @Injectable()
 export class AuthService {
-	create(createAuthDto: LoginDto) {
-		return 'This action adds a new auth';
+	constructor(
+		private readonly usersService: UsersService,
+		private readonly vendorsService: VendorsService,
+	) {}
+
+	async validateUser(loginDto: LoginDto) {
+		const user = await this.usersService.findByEmail(loginDto.email);
+		if (user && user.password === loginDto.password) {
+			const { password, ...result } = user;
+			return result;
+		}
+		return null;
 	}
 
-	findAll() {
-		return `This action returns all auth`;
-	}
-
-	findOne(id: number) {
-		return `This action returns a #${id} auth`;
-	}
-
-	update(id: number, updateAuthDto: UpdateAuthDto) {
-		return `This action updates a #${id} auth`;
-	}
-
-	remove(id: number) {
-		return `This action removes a #${id} auth`;
+	async validateVendor(loginDto: LoginDto) {
+		const vendor = await this.vendorsService.findByEmail(loginDto.email);
+		if (vendor && vendor.password === loginDto.password) {
+			const { password, ...result } = vendor;
+			return result;
+		}
+		return null;
 	}
 }

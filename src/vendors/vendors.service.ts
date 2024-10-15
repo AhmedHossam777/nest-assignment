@@ -31,6 +31,14 @@ export class VendorsService {
 		return vendor;
 	}
 
+	async findByEmail(email: string): Promise<Vendor> {
+		const vendor = await this.VendorModel.findOne({ email }).exec();
+		if (!vendor)
+			throw new NotFoundException(`vendor with email : ${email} not found`);
+
+		return vendor;
+	}
+
 	async update(id: string, updateVendorDto: UpdateVendorDto): Promise<Vendor> {
 		const newVendor = await this.VendorModel.findByIdAndUpdate(
 			id,
