@@ -1,34 +1,59 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CartService } from './cart.service';
-import { CreateCartDto } from './dto/create-cart.dto';
-import { UpdateCartDto } from './dto/update-cart.dto';
+import { CartsService } from './cart.service';
+import { UserAuthGuard } from './../auth/guards/auth.guard';
+import {
+	Controller,
+	Get,
+	Post,
+	Body,
+	Patch,
+	Param,
+	Delete,
+	UseGuards,
+	Request,
+} from '@nestjs/common';
+import { AddToCartDto } from './dto/add-to-cart.dto';
+import { UpdateCartItemDto } from './dto/update-cart-item.dto';
 
 @Controller('cart')
-export class CartController {
-  constructor(private readonly cartService: CartService) {}
+@UseGuards(UserAuthGuard)
+export class CartsController {
+	constructor(private readonly cartsService: CartsService) {}
 
-  @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartService.create(createCartDto);
-  }
+	@Get()
+	getCart(@Request() req) {
+		const userId = req.user.id;
+		return this.cartsService.getCart(userId);
+	}
 
-  @Get()
-  findAll() {
-    return this.cartService.findAll();
-  }
+	@Post('add')
+	addToCart(@Request() req, @Body() addToCartDto: AddToCartDto) {
+		const userId = req.user.id;
+		return this.cartsService.addToCart(userId, addToCartDto);
+	}
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.cartService.findOne(+id);
-  }
+	@Patch('update/:productId')
+	updateCartItem(
+		@Request() req,
+		@Param('productId') productId: string,
+		@Body() updateCartItemDto: UpdateCartItemDto,
+	) {
+		const userId = req.user.id;
+		return this.cartsService.updateCartItem(
+			userId,
+			productId,
+			updateCartItemDto,
+		);
+	}
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartService.update(+id, updateCartDto);
-  }
+	@Delete('delete/:productId')
+	removeFromCart(@Request() req, @Param('productId') productId: string) {
+		const userId = req.user.id;
+		return this.cartsService.removeFromCart(userId, productId);
+	}
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cartService.remove(+id);
-  }
+	@Delete('clear')
+	clearCart(@Request() req) {
+		const userId = req.user.id;
+		return this.cartsService.clearCart(userId);
+	}
 }

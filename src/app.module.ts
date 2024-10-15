@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { VendorsModule } from './vendors/vendors.module';
 import { ProductsModule } from './products/products.module';
-import { CartModule } from './cart/cart.module';
+import { CartsModule } from './cart/cart.module';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
@@ -17,7 +17,7 @@ import { CategoryModule } from './category/category.module';
 		UsersModule,
 		VendorsModule,
 		ProductsModule,
-		CartModule,
+		CartsModule,
 		AuthModule,
 		CategoryModule,
 	],

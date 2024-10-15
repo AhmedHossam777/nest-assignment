@@ -1,0 +1,35 @@
+
+### Add Product to Cart
+POST http://localhost:3000/cart/add
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTNlOTVhOWUxYWQ5ZDFjMDc5MjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyOTAxMjgwMiwiZXhwIjoxNzI5MDE2NDAyfQ.uypVFjrmLmE7aXFqJm21l0lC-7cL-OPGljWR8qEeJk0
+Content-Type: application/json
+
+{
+  "productId": "670e8aaffede717a01a2f34e",
+  "quantity": 2
+}
+
+### Get Cart
+GET http://localhost:3000/cart
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTNlOTVhOWUxYWQ5ZDFjMDc5MjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyOTAxMjgwMiwiZXhwIjoxNzI5MDE2NDAyfQ.uypVFjrmLmE7aXFqJm21l0lC-7cL-OPGljWR8qEeJk0
+
+### Remove Product from Cart
+DELETE http://localhost:3000/cart/remove/670e8aaffede717a01a2f34e
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTNlOTVhOWUxYWQ5ZDFjMDc5MjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyOTAxMjgwMiwiZXhwIjoxNzI5MDE2NDAyfQ.uypVFjrmLmE7aXFqJm21l0lC-7cL-OPGljWR8qEeJk0
+
+### Update Product Quantity in Cart
+PATCH  http://localhost:3000/cart/update/670e8aaffede717a01a2f34e
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTNlOTVhOWUxYWQ5ZDFjMDc5MjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyOTAxMjgwMiwiZXhwIjoxNzI5MDE2NDAyfQ.uypVFjrmLmE7aXFqJm21l0lC-7cL-OPGljWR8qEeJk0
+Content-Type: application/json
+
+{
+  "quantity": 3
+}
+
+### Clear Cart
+DELETE http://localhost:3000/cart/clear
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTNlOTVhOWUxYWQ5ZDFjMDc5MjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyOTAxMjgwMiwiZXhwIjoxNzI5MDE2NDAyfQ.uypVFjrmLmE7aXFqJm21l0lC-7cL-OPGljWR8qEeJk0
+
+### Delete Product from Cart
+DELETE http://localhost:3000/cart/delete/670e8aaffede717a01a2f34e
+Authorization: Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTNlOTVhOWUxYWQ5ZDFjMDc5MjkiLCJyb2xlIjoidXNlciIsImlhdCI6MTcyOTAxMjgwMiwiZXhwIjoxNzI5MDE2NDAyfQ.uypVFjrmLmE7aXFqJm21l0lC-7cL-OPGljWR8qEeJk0
