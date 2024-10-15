@@ -2,7 +2,7 @@ import { IsString } from 'class-validator';
 
 export class CreateProductDto {
 	@IsString()
-	title: string;
+	name: string;
 
 	@IsString()
 	price: string;

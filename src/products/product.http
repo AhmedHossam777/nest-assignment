@@ -34,3 +34,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN
 ### Get all products
 GET localhost:3000/products/my-products
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDA2MDQxLCJleHAiOjE3MjkwMDk2NDF9.VLPl5C5Um3Itot8ke38Nlrnst_T65pu9kGgBna2-xgo
+
+### GET All Product Of a category

@@ -15,8 +15,8 @@ export class Category {
 	@Prop({ required: true })
 	name: string;
 
-	// @Prop({ type: Types.ObjectId, ref: Product.name, required: true })
-	// products: Types.ObjectId[] | Product[];
+	@Prop({ type: Types.ObjectId, ref: Product.name, required: false })
+	products: Types.ObjectId[] | Product[];
 }
 
 export type CategoryDocument = Category & Document;
