@@ -5,8 +5,7 @@ import { VendorsService } from '../vendors/vendors.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { CreateVendorDto } from '../vendors/dto/create-vendor.dto';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/entities/user.entity';
-import { Vendor } from '../vendors/entities/vendor.entity';
+
 import * as bcrypt from 'bcrypt';
 
 @Injectable()
