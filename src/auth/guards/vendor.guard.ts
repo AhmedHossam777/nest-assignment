@@ -1,26 +1,14 @@
-import {
-	Injectable,
-	UnauthorizedException,
-	ExecutionContext,
-	CanActivate,
-} from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Observable } from 'rxjs';
 
 @Injectable()
-export class VendorGuard extends AuthGuard('jwt') implements CanActivate {
-	canActivate(
-		context: ExecutionContext,
-	): boolean | Promise<boolean> | Observable<boolean> {
-		return super.canActivate(context);
-	}
-
-	handleRequest(err, user, info, context: ExecutionContext) {
+export class VendorAuthGuard extends AuthGuard('jwt') {
+	handleRequest(err, user, info) {
 		if (err || !user) {
-			throw err || new UnauthorizedException();
+			throw err || new UnauthorizedException('Unauthorized');
 		}
 		if (user.role !== 'vendor') {
-			throw new UnauthorizedException();
+			throw new UnauthorizedException('Access restricted to vendors only');
 		}
 		return user;
 	}

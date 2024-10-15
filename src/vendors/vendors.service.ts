@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import { CreateVendorDto } from './dto/create-vendor.dto';
 import { UpdateVendorDto } from './dto/update-vendor.dto';
 import { Model } from 'mongoose';
 import { Vendor, VendorDocument } from './entities/vendor.entity';
 import { InjectModel } from '@nestjs/mongoose';
+import { UserDocument } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class VendorsService {
@@ -23,10 +28,11 @@ export class VendorsService {
 		return vendors;
 	}
 
-	async findOne(id: string): Promise<VendorDocument | null> {
+	async findById(id: string): Promise<VendorDocument | null> {
 		const vendor = await this.VendorModel.findById(id).exec();
-		if (!vendor)
-			throw new NotFoundException(`vendor with id : ${id} not found`);
+		if (!vendor) {
+			throw new BadRequestException(`vendor with id ${id} not found`);
+		}
 
 		return vendor;
 	}

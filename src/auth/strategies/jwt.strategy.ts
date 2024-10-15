@@ -1,13 +1,11 @@
+// src/auth/jwt.strategy.ts
+
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { UsersService } from '../../users/users.service';
 import { VendorsService } from '../../vendors/vendors.service';
-
-interface Payload {
-	sub: string; // user or vendor id
-	role: 'user' | 'vendor';
-}
+import { JwtPayload } from '../interfaces/jwt-payload.interface';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -22,14 +20,19 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 		});
 	}
 
-	async validate(payload: Payload) {
-		const user = await this.usersService.findOne(payload.sub);
-		const vendor = await this.vendorsService.findOne(payload.sub);
-		if (user) {
-			return user;
-		}
-		if (vendor) {
-			return vendor;
+	async validate(payload: JwtPayload) {
+		if (payload.role === 'user') {
+			const user = await this.usersService.findById(payload.sub);
+			if (user) {
+				// Attach role and userId to the request object
+				return { id: user._id.toString(), role: 'user' };
+			}
+		} else if (payload.role === 'vendor') {
+			const vendor = await this.vendorsService.findById(payload.sub);
+			if (vendor) {
+				// Attach role and vendorId to the request object
+				return { id: vendor._id.toString(), role: 'vendor' };
+			}
 		}
 		throw new UnauthorizedException();
 	}

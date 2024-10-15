@@ -7,6 +7,7 @@ import { CreateVendorDto } from '../vendors/dto/create-vendor.dto';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/entities/user.entity';
 import { Vendor } from '../vendors/entities/vendor.entity';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -16,24 +17,28 @@ export class AuthService {
 		private readonly jwtService: JwtService,
 	) {}
 
-	async generateTokens(id: string) {
-		const payload = { sub: id };
+	async generateTokens(id: string, role: 'user' | 'vendor') {
+		const payload = { sub: id, role };
 		return {
 			access_token: this.jwtService.sign(payload, {
 				secret: process.env.JWT_SECRET,
-				expiresIn: process.env.JWT_EXPIRATION,
+				expiresIn: process.env.JWT_EXPIRATION_TIME || '60m',
 			}),
 		};
 	}
 
 	async registerUser(createUserDto: CreateUserDto) {
 		const user = await this.usersService.create(createUserDto);
+		console.log(user);
 
-		const token = await this.generateTokens(user._id as string);
+		const token = await this.generateTokens(user._id.toString(), 'user');
+		console.log(token);
+
+		const { password, ...result } = user.toObject();
 
 		return {
 			token,
-			user,
+			user: result,
 		};
 	}
 
@@ -41,31 +46,28 @@ export class AuthService {
 		const user = await this.usersService.findByEmail(loginDto.email);
 		if (!user) throw new BadRequestException('Invalid credentials');
 
-		const userInstance = new User();
-		Object.assign(userInstance, user);
-
-		const isValid = await userInstance.validatePassword(
-			loginDto.password,
-			user.password,
-		);
-
+		const isValid = await bcrypt.compare(loginDto.password, user.password);
 		if (!isValid) throw new BadRequestException('Invalid credentials');
 
-		const token = await this.generateTokens(user._id as string);
+		const token = await this.generateTokens(user._id.toString(), 'user');
+
+		const { password, ...result } = user.toObject();
 
 		return {
 			token,
-			user,
+			user: result,
 		};
 	}
 
 	async registerVendor(createVendorDto: CreateVendorDto) {
 		const vendor = await this.vendorsService.create(createVendorDto);
-		const token = await this.generateTokens(vendor._id as string);
+		const token = await this.generateTokens(vendor._id.toString(), 'vendor');
+
+		const { password, ...result } = vendor.toObject();
 
 		return {
 			token,
-			vendor,
+			vendor: result,
 		};
 	}
 
@@ -73,20 +75,16 @@ export class AuthService {
 		const vendor = await this.vendorsService.findByEmail(loginDto.email);
 		if (!vendor) throw new BadRequestException('Invalid credentials');
 
-		const vendorInstance = new Vendor();
-		Object.assign(vendorInstance, vendor);
-
-		const isValid = await vendorInstance.validatePassword(
-			loginDto.password,
-			vendor.password,
-		);
+		const isValid = await bcrypt.compare(loginDto.password, vendor.password);
 		if (!isValid) throw new BadRequestException('Invalid credentials');
 
-		const token = await this.generateTokens(vendor._id as string);
+		const token = await this.generateTokens(vendor._id.toString(), 'vendor');
+
+		const { password, ...result } = vendor.toObject();
 
 		return {
 			token,
-			vendor,
+			vendor: result,
 		};
 	}
 }

@@ -12,19 +12,21 @@ Content-Type: application/json
     "password": "123456"
 }
 
-### Get All Vendors
+### Get All Vendors , auth required
 GET http://localhost:3000/vendors
-Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJyb2xlIjoidmVuZG9yIiwiaWF0IjoxNzI5MDAyODkyLCJleHAiOjE3MjkwMDY0OTJ9.cZUmaIV7nfF1AGgZ19QebPtQqeDu2CgdwwjthDqJSdg
+
 
 ### Get Vendor By Id
 GET http://localhost:3000/vendors/670d71c87a77cd3364a2c571
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NzBlNTQzN2MxMjg3OGU3NmE1ZDk0ZTQiLCJpYXQiOjE3Mjg5OTgxMjgsImV4cCI6MTcyOTA4NDUyOH0.VmYZPDEHafJDEtvS_f6ETrqh_wha-w6AVZoktQeLksk
 
 ### Update Vendor
 PATCH http://localhost:3000/vendors/670d71c87a77cd3364a2c571
 Content-Type: application/json
 
 {
-    "name": "dod"
+    "name": "ahmed"
 }
 
 ### Delete Vendor

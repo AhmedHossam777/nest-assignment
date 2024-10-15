@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from './entities/user.entity';
 import { Model } from 'mongoose';
+import { exec } from 'child_process';
 
 @Injectable()
 export class UsersService {
@@ -20,9 +25,11 @@ export class UsersService {
 		return users;
 	}
 
-	async findOne(id: string): Promise<UserDocument | null> {
-		const user: UserDocument = await this.UserModel.findById(id).exec();
-		if (!user) throw new NotFoundException(`user with id : ${id} not found`);
+	async findById(id: string): Promise<UserDocument | null> {
+		const user = await this.UserModel.findById(id).exec();
+		if (!user) {
+			throw new BadRequestException(`user with id ${id} not found`);
+		}
 
 		return user;
 	}

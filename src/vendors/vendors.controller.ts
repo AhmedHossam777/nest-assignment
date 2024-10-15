@@ -6,11 +6,13 @@ import {
 	Patch,
 	Param,
 	Delete,
+	UseGuards,
 } from '@nestjs/common';
 import { VendorsService } from './vendors.service';
 import { CreateVendorDto } from './dto/create-vendor.dto';
 import { UpdateVendorDto } from './dto/update-vendor.dto';
 import { MongoIdPipe } from '../common/pipes/mongo-id.pipe';
+import { VendorAuthGuard } from '../auth/guards/vendor.guard';
 
 @Controller('vendors')
 export class VendorsController {
@@ -22,13 +24,14 @@ export class VendorsController {
 	}
 
 	@Get()
+	@UseGuards(VendorAuthGuard)
 	findAll() {
 		return this.vendorsService.findAll();
 	}
 
 	@Get(':id')
 	findOne(@Param('id', MongoIdPipe) id: string) {
-		return this.vendorsService.findOne(id);
+		return this.vendorsService.findById(id);
 	}
 
 	@Patch(':id')

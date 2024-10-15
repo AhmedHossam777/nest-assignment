@@ -22,11 +22,8 @@ export class Vendor {
 	@Prop({ required: true })
 	password: string;
 
-	async validatePassword(
-		candidatePassword: string,
-		password: string,
-	): Promise<boolean> {
-		return bcrypt.compare(candidatePassword, password);
+	async validatePassword(candidatePassword: string): Promise<boolean> {
+		return bcrypt.compare(candidatePassword, this.password);
 	}
 }
 

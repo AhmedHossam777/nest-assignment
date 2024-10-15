@@ -26,11 +26,8 @@ export class User {
 	@Prop({ default: false })
 	isAdmin: boolean;
 
-	async validatePassword(
-		candidatePassword: string,
-		password: string,
-	): Promise<boolean> {
-		return bcrypt.compare(candidatePassword, password);
+	async validatePassword(password: string): Promise<boolean> {
+		return bcrypt.compare(password, this.password);
 	}
 }
 
